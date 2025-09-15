@@ -12,6 +12,7 @@ import {
   Button,
   Box,
   Divider,
+  Paper,
 } from "@mui/material";
 import DirectionsBoatIcon from "@mui/icons-material/DirectionsBoat";
 import {
@@ -49,7 +50,7 @@ export default function App() {
   const emptyBoatWeight = 250; // kg
   const safeLimit = maxCapacity - emptyBoatWeight;
 
-  // Sugestão de troca inteligente
+  // Função para sugerir troca
   const suggestSwap = () => {
     const diff = totalLeft - totalRight;
     if (Math.abs(diff) < 5) return "⚖️ Os lados já estão equilibrados.";
@@ -59,28 +60,39 @@ export default function App() {
     const heavierLabel = diff > 0 ? "esquerdo" : "direito";
     const lighterLabel = diff > 0 ? "direito" : "esquerdo";
 
-    let bestCandidate = null;
-    let bestReduction = 0;
+    let bestOption = null;
+    let minDiff = Math.abs(diff);
 
-    // Tenta achar a pessoa que mais reduz a diferença
+    // Tenta mover uma pessoa
     heavierSide.forEach((row) => {
       const w = parseFloat(row.weight);
       if (!w) return;
       const newDiff = Math.abs(diff - 2 * w);
-      const reduction = Math.abs(diff) - newDiff;
-      if (reduction > bestReduction) {
-        bestReduction = reduction;
-        bestCandidate = row;
+      if (newDiff < minDiff) {
+        minDiff = newDiff;
+        bestOption = [row];
       }
     });
 
-    if (bestCandidate) {
-      return `🔄 Sugestão: mover **${bestCandidate.name || "remador"}** (${bestCandidate.weight} kg) do lado ${heavierLabel} → lado ${lighterLabel} para equilibrar. Diferença restante: ${Math.abs(
-        Math.abs(diff) - 2 * bestCandidate.weight
-      )} kg`;
+    // Tenta mover pares de pessoas se uma não equilibrar
+    for (let i = 0; i < heavierSide.length; i++) {
+      for (let j = i + 1; j < heavierSide.length; j++) {
+        const w1 = parseFloat(heavierSide[i].weight) || 0;
+        const w2 = parseFloat(heavierSide[j].weight) || 0;
+        const newDiff = Math.abs(diff - 2 * (w1 + w2));
+        if (newDiff < minDiff) {
+          minDiff = newDiff;
+          bestOption = [heavierSide[i], heavierSide[j]];
+        }
+      }
     }
 
-    return "ℹ️ Não foi possível sugerir uma troca.";
+    if (!bestOption) return "ℹ️ Não foi possível sugerir uma troca.";
+
+    const names = bestOption.map((r) => r.name || "remador").join(" e ");
+    const weights = bestOption.map((r) => r.weight).join(" kg e ") + " kg";
+
+    return `🔄 Sugestão: mover ${names} (${weights}) do lado ${heavierLabel} → lado ${lighterLabel}. Diferença restante: ${minDiff} kg`;
   };
 
   // Dados para gráfico
@@ -210,7 +222,8 @@ export default function App() {
         </Grid>
 
         {/* Resultado */}
-        <Box
+        <Paper
+          elevation={3}
           sx={{
             mt: 3,
             textAlign: "center",
@@ -236,7 +249,6 @@ export default function App() {
             Diferença entre lados: {Math.abs(totalLeft - totalRight)} kg
           </Typography>
 
-          {/* Sugestão de troca */}
           <Typography
             variant="subtitle2"
             sx={{ mt: 2, fontStyle: "italic" }}
@@ -269,7 +281,7 @@ export default function App() {
           >
             Resetar
           </Button>
-        </Box>
+        </Paper>
       </Container>
     </>
   );
