@@ -49,7 +49,7 @@ html, body {
 
 body {
   background-image: 
-    radial-gradient(at 10% 10%, rgba(24ce, 231, 243, 0.6) 0px, transparent 60%),
+    radial-gradient(at 10% 10%, rgba(252, 231, 243, 0.6) 0px, transparent 60%),
     radial-gradient(at 90% 90%, rgba(253, 242, 248, 0.8) 0px, transparent 60%);
   background-attachment: fixed;
 }
@@ -91,6 +91,33 @@ h1, h2, h3, h4, h5, h6 {
 
 .glow-effect {
   box-shadow: var(--shadow-glow);
+}
+
+/* Preloader Keyframe Animations */
+@keyframes spinRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulseLogo {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 0.8; transform: scale(1.25); }
+}
+
+@keyframes pulseText {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@keyframes indeterminateProgress {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
 }
 
 /* Touch Otimizations */

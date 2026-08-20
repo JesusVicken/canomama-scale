@@ -1,5 +1,5 @@
 // src/App.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Box, Typography, Chip, ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import { AppProvider, useApp } from "./context/AppContext";
 import Header from "./components/Header";
@@ -10,17 +10,29 @@ import RosterModal from "./components/RosterModal";
 import ExportModal from "./components/ExportModal";
 import LineupHistoryModal from "./components/LineupHistoryModal";
 import MobileStickyBar from "./components/MobileStickyBar";
+import Preloader from "./components/Preloader";
 
 function MainContent() {
   const { activeBoatConfig, lineupName } = useApp();
 
+  const [loading, setLoading] = useState(true);
   const [selectedSeat, setSelectedSeat] = useState(null);
   const [openRoster, setOpenRoster] = useState(false);
   const [openExport, setOpenExport] = useState(false);
   const [openHistory, setOpenHistory] = useState(false);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Box sx={{ minHeight: "100vh", pb: { xs: 10, sm: 6 } }}>
+      {/* Tela de Preloader Splash Screen */}
+      <Preloader loading={loading} />
+
       {/* Header Principal */}
       <Header
         onOpenRoster={() => setOpenRoster(true)}
