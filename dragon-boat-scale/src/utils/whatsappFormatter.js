@@ -29,7 +29,7 @@ export const generateWhatsAppSummary = (lineup, boatConfig, lineupName = "Escala
     const rName = rightRow?.name ? rightRow.name.trim() : "Vago";
     const rW = rightRow?.weight ? `[${rightRow.weight}k]` : "";
 
-    text += `*F${i + 1}* | 👈 ${lName} ${lW} | 👉 ${rName} ${rW}\n`;
+    text += `*Banco ${i + 1}* | 👈 ${lName} ${lW} | 👉 ${rName} ${rW}\n`;
   }
 
   if (boatConfig.hasSteersperson) {

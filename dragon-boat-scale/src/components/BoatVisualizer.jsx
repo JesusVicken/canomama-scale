@@ -50,7 +50,7 @@ const DragonTailSVG = () => (
 export default function BoatVisualizer({ onSelectSeat }) {
   const { lineup, activeBoatConfig, clearSeat } = useApp();
 
-  // Componente de Assento Individual (Limpo e sem linhas sobrepostas)
+  // Componente de Assento Individual (Totalmente Centralizado e Intuitivo)
   const SeatCard = ({ side, index, label, data, isSpecial }) => {
     const hasName = Boolean(data?.name && data.name.trim() !== "");
     const weightNum = parseWeight(data?.weight);
@@ -70,6 +70,7 @@ export default function BoatVisualizer({ onSelectSeat }) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
+          boxSizing: "border-box",
           "&:hover": {
             borderColor: "var(--accent-pink)",
             bgcolor: "#fce7f3",
@@ -159,15 +160,19 @@ export default function BoatVisualizer({ onSelectSeat }) {
 
   return (
     <Box sx={{ width: "100%", position: "relative", my: 2 }}>
-      {/* Desenho do Casco do Barco (Hull Container) */}
+      {/* Desenho do Casco do Barco (Hull Container Centrado) */}
       <Box
         sx={{
           position: "relative",
+          width: "100%",
+          maxWidth: 600,
+          mx: "auto",
           p: { xs: 1.5, sm: 2.5 },
           borderRadius: { xs: "24px", sm: "32px" },
           background: "linear-gradient(180deg, #ffffff 0%, #fdf2f8 50%, #ffffff 100%)",
           border: "2.5px solid var(--border-glass)",
           boxShadow: "var(--shadow-glass)",
+          boxSizing: "border-box",
           overflow: "hidden",
         }}
       >
@@ -206,7 +211,7 @@ export default function BoatVisualizer({ onSelectSeat }) {
         </Box>
 
         {/* ================= CABEÇALHO DOS LADOS (ESQUERDA X DIREITA) ================= */}
-        <Grid container spacing={{ xs: 1.5, sm: 2 }} sx={{ mb: 1.5 }}>
+        <Grid container spacing={{ xs: 1, sm: 2 }} justifyContent="center" sx={{ mb: 1.5 }}>
           <Grid xs={6}>
             <Box
               sx={{
@@ -248,7 +253,7 @@ export default function BoatVisualizer({ onSelectSeat }) {
           </Grid>
         </Grid>
 
-        {/* ================= CORPO DA CANOA (FILEIRAS LADO A LADO) ================= */}
+        {/* ================= CORPO DA CANOA (BANCO 1 A BANCO N LADO A LADO) ================= */}
         <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, sm: 1.2 } }}>
           {Array.from({ length: activeBoatConfig.rows }).map((_, idx) => {
             const leftData = lineup.leftSide?.[idx];
@@ -277,13 +282,13 @@ export default function BoatVisualizer({ onSelectSeat }) {
                   </Box>
                 )}
 
-                {/* Fileira Pareada Lado a Lado (50% Esquerda | 50% Direita) */}
-                <Grid container spacing={{ xs: 1.2, sm: 2 }} alignItems="stretch">
+                {/* Fileira Pareada Lado a Lado (Banco N • Esq | Banco N • Dir) */}
+                <Grid container spacing={{ xs: 1, sm: 2 }} justifyContent="center" alignItems="stretch">
                   <Grid xs={6}>
-                    <SeatCard side="left" index={idx} label={`F${idx + 1} • Esq`} data={leftData} />
+                    <SeatCard side="left" index={idx} label={`Banco ${idx + 1} • Esq`} data={leftData} />
                   </Grid>
                   <Grid xs={6}>
-                    <SeatCard side="right" index={idx} label={`F${idx + 1} • Dir`} data={rightData} />
+                    <SeatCard side="right" index={idx} label={`Banco ${idx + 1} • Dir`} data={rightData} />
                   </Grid>
                 </Grid>
               </React.Fragment>
