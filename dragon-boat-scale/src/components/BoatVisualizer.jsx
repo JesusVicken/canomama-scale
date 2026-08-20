@@ -137,20 +137,21 @@ export default function BoatVisualizer({ onSelectSeat }) {
       >
         {/* ================= PROA (FRENTE DO BARCO - CABEÇA DE DRAGÃO REAIS) ================= */}
         <Box sx={{ textAlign: "center", mb: 2, display: "flex", flexDirection: "column", alignItems: "center" }}>
-          {/* Imagem Real da Cabeça do Dragão da Proa */}
-          <Box
-            component="img"
-            src="/dragon_head.png"
-            alt="Proa Cabeça do Dragão"
-            sx={{
-              height: { xs: 55, sm: 70 },
-              width: "auto",
-              objectFit: "contain",
-              transform: "rotate(90deg)", // Aponta para CIMA (Proa)
-              filter: "drop-shadow(0 4px 10px rgba(194, 24, 91, 0.3))",
-              mb: 1,
-            }}
-          />
+          {/* Container fixando a altura da cabeça rotacionada para evitar overlap */}
+          <Box sx={{ height: { xs: 65, sm: 80 }, display: "flex", alignItems: "center", justifyContent: "center", mb: 1.5 }}>
+            <Box
+              component="img"
+              src="/dragon_head.png"
+              alt="Proa Cabeça do Dragão"
+              sx={{
+                height: { xs: 55, sm: 70 },
+                width: "auto",
+                objectFit: "contain",
+                transform: "rotate(90deg)", // Aponta para CIMA (Proa)
+                filter: "drop-shadow(0 4px 10px rgba(194, 24, 91, 0.3))",
+              }}
+            />
+          </Box>
 
           {/* Banner de Destaque da PROA */}
           <Box
@@ -294,20 +295,21 @@ export default function BoatVisualizer({ onSelectSeat }) {
             </Typography>
           </Box>
 
-          {/* Imagem Real da Cauda do Dragão da Popa */}
-          <Box
-            component="img"
-            src="/dragon_tail.png"
-            alt="Popa Cauda do Dragão"
-            sx={{
-              height: { xs: 50, sm: 65 },
-              width: "auto",
-              objectFit: "contain",
-              transform: "rotate(90deg)", // Aponta para BAIXO (Popa)
-              filter: "drop-shadow(0 4px 10px rgba(194, 24, 91, 0.3))",
-              mt: 0.5,
-            }}
-          />
+          {/* Container fixando a altura da cauda rotacionada para evitar overlap */}
+          <Box sx={{ height: { xs: 60, sm: 75 }, display: "flex", alignItems: "center", justifyContent: "center", mt: 1.5 }}>
+            <Box
+              component="img"
+              src="/dragon_tail.png"
+              alt="Popa Cauda do Dragão"
+              sx={{
+                height: { xs: 50, sm: 65 },
+                width: "auto",
+                objectFit: "contain",
+                transform: "rotate(90deg)", // Aponta para BAIXO (Popa)
+                filter: "drop-shadow(0 4px 10px rgba(194, 24, 91, 0.3))",
+              }}
+            />
+          </Box>
         </Box>
       </Box>
     </Box>
