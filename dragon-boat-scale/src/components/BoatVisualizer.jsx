@@ -6,47 +6,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useApp } from "../context/AppContext";
 import { parseWeight, formatNumber } from "../utils/balanceAlgorithm";
 
-// Ilustração SVG estilizada da Cabeça do Dragão (Proa)
-const DragonHeadSVG = () => (
-  <svg width="52" height="52" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M32 4C24 12 16 20 16 32C16 44 24 52 32 60C40 52 48 44 48 32C48 20 40 12 32 4Z"
-      fill="url(#dragonHeadGradient)"
-    />
-    <circle cx="26" cy="24" r="3" fill="#ffffff" />
-    <circle cx="38" cy="24" r="3" fill="#ffffff" />
-    <circle cx="26" cy="24" r="1.5" fill="#c2185b" />
-    <circle cx="38" cy="24" r="1.5" fill="#c2185b" />
-    <path d="M22 38C28 42 36 42 42 38" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" />
-    <path d="M28 8L32 2L36 8" stroke="#e91e63" strokeWidth="2.5" strokeLinecap="round" />
-    <defs>
-      <linearGradient id="dragonHeadGradient" x1="32" y1="4" x2="32" y2="60" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#e91e63" />
-        <stop offset="1" stopColor="#c2185b" />
-      </linearGradient>
-    </defs>
-  </svg>
-);
-
-// Ilustração SVG estilizada da Cauda do Dragão (Popa)
-const DragonTailSVG = () => (
-  <svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M32 60C20 48 12 36 12 24C12 12 24 4 32 4C40 4 52 12 52 24C52 36 44 48 32 60Z"
-      fill="url(#dragonTailGradient)"
-    />
-    <path d="M32 12V48" stroke="#ffffff" strokeWidth="2.5" strokeDasharray="3 3" />
-    <path d="M20 28C26 34 38 34 44 28" stroke="#fbcfe8" strokeWidth="2" strokeLinecap="round" />
-    <path d="M22 40C28 44 36 44 42 40" stroke="#fbcfe8" strokeWidth="2" strokeLinecap="round" />
-    <defs>
-      <linearGradient id="dragonTailGradient" x1="32" y1="4" x2="32" y2="60" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#c2185b" />
-        <stop offset="1" stopColor="#9e1147" />
-      </linearGradient>
-    </defs>
-  </svg>
-);
-
 export default function BoatVisualizer({ onSelectSeat }) {
   const { lineup, activeBoatConfig, clearSeat } = useApp();
 
@@ -176,12 +135,22 @@ export default function BoatVisualizer({ onSelectSeat }) {
           overflow: "hidden",
         }}
       >
-        {/* ================= PROA (FRENTE DO BARCO) ================= */}
+        {/* ================= PROA (FRENTE DO BARCO - CABEÇA DE DRAGÃO REAIS) ================= */}
         <Box sx={{ textAlign: "center", mb: 2, display: "flex", flexDirection: "column", alignItems: "center" }}>
-          {/* Ilustração da Cabeça do Dragão */}
-          <Box sx={{ mb: 0.5 }}>
-            <DragonHeadSVG />
-          </Box>
+          {/* Imagem Real da Cabeça do Dragão da Proa */}
+          <Box
+            component="img"
+            src="/dragon_head.png"
+            alt="Proa Cabeça do Dragão"
+            sx={{
+              height: { xs: 55, sm: 70 },
+              width: "auto",
+              objectFit: "contain",
+              transform: "rotate(-90deg)", // Aponta para CIMA (Proa)
+              filter: "drop-shadow(0 4px 10px rgba(194, 24, 91, 0.3))",
+              mb: 1,
+            }}
+          />
 
           {/* Banner de Destaque da PROA */}
           <Box
@@ -296,7 +265,7 @@ export default function BoatVisualizer({ onSelectSeat }) {
           })}
         </Box>
 
-        {/* ================= POPA (TRÁS DO BARCO / LEME) ================= */}
+        {/* ================= POPA (TRÁS DO BARCO / LEME - CAUDA DE DRAGÃO REAIS) ================= */}
         <Box sx={{ textAlign: "center", mt: 2.5, display: "flex", flexDirection: "column", alignItems: "center" }}>
           {/* Assento Especial: Leme */}
           {activeBoatConfig.hasSteersperson && (
@@ -317,7 +286,7 @@ export default function BoatVisualizer({ onSelectSeat }) {
               py: 0.7,
               borderRadius: 10,
               boxShadow: "var(--shadow-glow)",
-              mb: 0.5,
+              mb: 1,
             }}
           >
             <Typography variant="caption" sx={{ fontWeight: 800, letterSpacing: 1.5, fontSize: { xs: "0.78rem", sm: "0.85rem" } }}>
@@ -325,10 +294,20 @@ export default function BoatVisualizer({ onSelectSeat }) {
             </Typography>
           </Box>
 
-          {/* Ilustração da Cauda do Dragão */}
-          <Box sx={{ mt: 0.5 }}>
-            <DragonTailSVG />
-          </Box>
+          {/* Imagem Real da Cauda do Dragão da Popa */}
+          <Box
+            component="img"
+            src="/dragon_tail.png"
+            alt="Popa Cauda do Dragão"
+            sx={{
+              height: { xs: 50, sm: 65 },
+              width: "auto",
+              objectFit: "contain",
+              transform: "rotate(90deg)", // Aponta para BAIXO (Popa)
+              filter: "drop-shadow(0 4px 10px rgba(194, 24, 91, 0.3))",
+              mt: 0.5,
+            }}
+          />
         </Box>
       </Box>
     </Box>
