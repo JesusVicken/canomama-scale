@@ -146,7 +146,7 @@ export default function BoatVisualizer({ onSelectSeat }) {
               height: { xs: 55, sm: 70 },
               width: "auto",
               objectFit: "contain",
-              transform: "rotate(-90deg)", // Aponta para CIMA (Proa)
+              transform: "rotate(90deg)", // Aponta para CIMA (Proa)
               filter: "drop-shadow(0 4px 10px rgba(194, 24, 91, 0.3))",
               mb: 1,
             }}
