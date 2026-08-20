@@ -1,6 +1,6 @@
 // src/components/BoatVisualizer.jsx
 import React from "react";
-import { Box, Typography, Grid, IconButton, Chip, Avatar, Divider } from "@mui/material";
+import { Box, Typography, Grid, IconButton, Chip, Avatar } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CloseIcon from "@mui/icons-material/Close";
 import { useApp } from "../context/AppContext";
@@ -8,7 +8,7 @@ import { parseWeight, formatNumber } from "../utils/balanceAlgorithm";
 
 // Ilustração SVG estilizada da Cabeça do Dragão (Proa)
 const DragonHeadSVG = () => (
-  <svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="52" height="52" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M32 4C24 12 16 20 16 32C16 44 24 52 32 60C40 52 48 44 48 32C48 20 40 12 32 4Z"
       fill="url(#dragonHeadGradient)"
@@ -30,7 +30,7 @@ const DragonHeadSVG = () => (
 
 // Ilustração SVG estilizada da Cauda do Dragão (Popa)
 const DragonTailSVG = () => (
-  <svg width="44" height="44" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M32 60C20 48 12 36 12 24C12 12 24 4 32 4C40 4 52 12 52 24C52 36 44 48 32 60Z"
       fill="url(#dragonTailGradient)"
@@ -50,7 +50,7 @@ const DragonTailSVG = () => (
 export default function BoatVisualizer({ onSelectSeat }) {
   const { lineup, activeBoatConfig, clearSeat } = useApp();
 
-  // Componente de Assento Individual (Otimizado Mobile com Toque Rápido)
+  // Componente de Assento Individual (Limpo e sem linhas sobrepostas)
   const SeatCard = ({ side, index, label, data, isSpecial }) => {
     const hasName = Boolean(data?.name && data.name.trim() !== "");
     const weightNum = parseWeight(data?.weight);
@@ -64,15 +64,13 @@ export default function BoatVisualizer({ onSelectSeat }) {
           borderRadius: { xs: "12px", sm: "14px" },
           background: hasName ? "#ffffff" : "#fdf2f8",
           border: `1.5px solid ${hasName ? "var(--accent-pink)" : "rgba(194, 24, 91, 0.2)"}`,
-          boxShadow: hasName ? "0 4px 14px rgba(194, 24, 91, 0.12)" : "none",
+          boxShadow: hasName ? "0 4px 12px rgba(194, 24, 91, 0.12)" : "none",
           transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
           cursor: "pointer",
-          position: "relative",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
           "&:hover": {
-            transform: "translateY(-1px)",
             borderColor: "var(--accent-pink)",
             bgcolor: "#fce7f3",
           },
@@ -165,21 +163,22 @@ export default function BoatVisualizer({ onSelectSeat }) {
       <Box
         sx={{
           position: "relative",
-          p: { xs: 1.5, sm: 3 },
-          borderRadius: { xs: "28px", sm: "36px" },
+          p: { xs: 1.5, sm: 2.5 },
+          borderRadius: { xs: "24px", sm: "32px" },
           background: "linear-gradient(180deg, #ffffff 0%, #fdf2f8 50%, #ffffff 100%)",
           border: "2.5px solid var(--border-glass)",
-          overflow: "hidden",
           boxShadow: "var(--shadow-glass)",
+          overflow: "hidden",
         }}
       >
-        {/* CABEÇA DE DRAGÃO E BANNER DE PROA (FRENTE) */}
+        {/* ================= PROA (FRENTE DO BARCO) ================= */}
         <Box sx={{ textAlign: "center", mb: 2, display: "flex", flexDirection: "column", alignItems: "center" }}>
           {/* Ilustração da Cabeça do Dragão */}
           <Box sx={{ mb: 0.5 }}>
             <DragonHeadSVG />
           </Box>
 
+          {/* Banner de Destaque da PROA */}
           <Box
             sx={{
               display: "inline-flex",
@@ -187,13 +186,13 @@ export default function BoatVisualizer({ onSelectSeat }) {
               gap: 1,
               bgcolor: "var(--accent-pink)",
               color: "#ffffff",
-              px: 2.5,
-              py: 0.6,
+              px: 3,
+              py: 0.7,
               borderRadius: 10,
               boxShadow: "var(--shadow-glow)",
             }}
           >
-            <Typography variant="caption" sx={{ fontWeight: 800, letterSpacing: 1.2, fontSize: { xs: "0.72rem", sm: "0.82rem" } }}>
+            <Typography variant="caption" sx={{ fontWeight: 800, letterSpacing: 1.5, fontSize: { xs: "0.78rem", sm: "0.85rem" } }}>
               ▲ PROA (FRENTE DO BARCO)
             </Typography>
           </Box>
@@ -206,18 +205,18 @@ export default function BoatVisualizer({ onSelectSeat }) {
           )}
         </Box>
 
-        {/* CABEÇALHO DOS LADOS (ESQUERDA X DIREITA) */}
-        <Grid container spacing={{ xs: 1.5, sm: 2.5 }} sx={{ mb: 1.5 }}>
+        {/* ================= CABEÇALHO DOS LADOS (ESQUERDA X DIREITA) ================= */}
+        <Grid container spacing={{ xs: 1.5, sm: 2 }} sx={{ mb: 1.5 }}>
           <Grid xs={6}>
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                px: 1,
-                py: 0.5,
+                px: 1.2,
+                py: 0.6,
                 bgcolor: "var(--accent-pink-soft)",
-                borderRadius: "10px",
+                borderRadius: "12px",
                 border: "1px solid var(--border-glass)",
               }}
             >
@@ -234,10 +233,10 @@ export default function BoatVisualizer({ onSelectSeat }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                px: 1,
-                py: 0.5,
+                px: 1.2,
+                py: 0.6,
                 bgcolor: "var(--accent-pink-soft)",
-                borderRadius: "10px",
+                borderRadius: "12px",
                 border: "1px solid var(--border-glass)",
               }}
             >
@@ -249,24 +248,8 @@ export default function BoatVisualizer({ onSelectSeat }) {
           </Grid>
         </Grid>
 
-        {/* CORPO DA CANOA: FILEIRAS COM CORREDOR CENTRAL */}
-        <Box sx={{ position: "relative", display: "flex", flexDirection: "column", gap: { xs: 1, sm: 1.2 } }}>
-          {/* Corredor Central (Linha Quilha da Canoa) */}
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "4px",
-              background: "linear-gradient(180deg, rgba(194, 24, 91, 0.4) 0%, rgba(194, 24, 91, 0.15) 50%, rgba(194, 24, 91, 0.4) 100%)",
-              borderRadius: 2,
-              zIndex: 1,
-              pointerEvents: "none",
-            }}
-          />
-
+        {/* ================= CORPO DA CANOA (FILEIRAS LADO A LADO) ================= */}
+        <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1, sm: 1.2 } }}>
           {Array.from({ length: activeBoatConfig.rows }).map((_, idx) => {
             const leftData = lineup.leftSide?.[idx];
             const rightData = lineup.rightSide?.[idx];
@@ -274,27 +257,27 @@ export default function BoatVisualizer({ onSelectSeat }) {
 
             return (
               <React.Fragment key={idx}>
-                {/* Divisória do Meio do Barco (Sala de Máquinas) */}
+                {/* Marcador do Meio do Barco (Sala de Máquinas) */}
                 {isMidpoint && (
                   <Box
                     sx={{
-                      my: 0.5,
-                      py: 0.4,
+                      my: 1,
+                      py: 0.6,
                       px: 1.5,
-                      bgcolor: "rgba(194, 24, 91, 0.08)",
-                      borderTop: "1px dashed var(--accent-pink)",
-                      borderBottom: "1px dashed var(--accent-pink)",
-                      borderRadius: "6px",
+                      bgcolor: "var(--accent-pink-soft)",
+                      borderTop: "1.5px dashed var(--accent-pink)",
+                      borderBottom: "1.5px dashed var(--accent-pink)",
+                      borderRadius: "8px",
                       textAlign: "center",
-                      zIndex: 2,
                     }}
                   >
-                    <Typography variant="caption" sx={{ fontWeight: 800, color: "var(--accent-pink)", letterSpacing: 1, fontSize: "0.68rem" }}>
+                    <Typography variant="caption" sx={{ fontWeight: 800, color: "var(--accent-pink)", letterSpacing: 1.2, fontSize: "0.72rem" }}>
                       ⚓ MEIO DO BARCO (SALA DE MÁQUINAS)
                     </Typography>
                   </Box>
                 )}
 
+                {/* Fileira Pareada Lado a Lado (50% Esquerda | 50% Direita) */}
                 <Grid container spacing={{ xs: 1.2, sm: 2 }} alignItems="stretch">
                   <Grid xs={6}>
                     <SeatCard side="left" index={idx} label={`F${idx + 1} • Esq`} data={leftData} />
@@ -308,7 +291,7 @@ export default function BoatVisualizer({ onSelectSeat }) {
           })}
         </Box>
 
-        {/* CAUDA DE DRAGÃO E BANNER DE POPA (TRÁS / LEME) */}
+        {/* ================= POPA (TRÁS DO BARCO / LEME) ================= */}
         <Box sx={{ textAlign: "center", mt: 2.5, display: "flex", flexDirection: "column", alignItems: "center" }}>
           {/* Assento Especial: Leme */}
           {activeBoatConfig.hasSteersperson && (
@@ -317,6 +300,7 @@ export default function BoatVisualizer({ onSelectSeat }) {
             </Box>
           )}
 
+          {/* Banner de Destaque da POPA */}
           <Box
             sx={{
               display: "inline-flex",
@@ -324,14 +308,14 @@ export default function BoatVisualizer({ onSelectSeat }) {
               gap: 1,
               bgcolor: "var(--accent-pink-dark)",
               color: "#ffffff",
-              px: 2.5,
-              py: 0.6,
+              px: 3,
+              py: 0.7,
               borderRadius: 10,
               boxShadow: "var(--shadow-glow)",
               mb: 0.5,
             }}
           >
-            <Typography variant="caption" sx={{ fontWeight: 800, letterSpacing: 1.2, fontSize: { xs: "0.72rem", sm: "0.82rem" } }}>
+            <Typography variant="caption" sx={{ fontWeight: 800, letterSpacing: 1.5, fontSize: { xs: "0.78rem", sm: "0.85rem" } }}>
               ▼ POPA (TRÁS / LEME)
             </Typography>
           </Box>
