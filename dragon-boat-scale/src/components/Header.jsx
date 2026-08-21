@@ -19,6 +19,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useApp } from "../context/AppContext";
 import { BOAT_TYPES } from "../utils/boatConfigs";
 
@@ -32,6 +33,7 @@ export default function Header({ onOpenRoster, onOpenExport, onOpenHistory }) {
     resetLineup,
     roster,
     savedLineups,
+    logout,
   } = useApp();
 
   const [boatMenuAnchor, setBoatMenuAnchor] = useState(null);
@@ -208,6 +210,13 @@ export default function Header({ onOpenRoster, onOpenExport, onOpenHistory }) {
           <Tooltip title="Limpar Escalação">
             <IconButton onClick={resetLineup} sx={{ color: "var(--text-muted)", "&:hover": { color: "var(--accent-rose)" } }}>
               <RestartAltIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+
+          {/* Logout */}
+          <Tooltip title="Sair do Sistema">
+            <IconButton onClick={logout} sx={{ color: "var(--text-muted)", "&:hover": { color: "var(--accent-pink)" } }}>
+              <LogoutIcon fontSize="small" />
             </IconButton>
           </Tooltip>
         </Box>

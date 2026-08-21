@@ -62,11 +62,7 @@ export default function Preloader({ loading }) {
         {/* Logo canoMAMA no Centro */}
         <Box
           component="img"
-          src="/logo.avif"
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = "/canoMAMAlogo1.png";
-          }}
+          src="/canoMAMAlogo1.png"
           alt="Associação Canomama"
           sx={{
             width: 84,

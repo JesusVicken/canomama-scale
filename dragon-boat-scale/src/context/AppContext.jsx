@@ -10,9 +10,53 @@ const STORAGE_KEYS = {
   LINEUP_PREFIX: "canomama_lineup_",
   ROSTER: "canomama_roster_v3",
   SAVED_LINEUPS: "canomama_saved_lineups_v3",
+  AUTH: "canomama_auth_v1",
+};
+
+export const AUTH_CREDENTIALS = {
+  username: "canomama",
+  password: "canomama",
 };
 
 export const AppProvider = ({ children }) => {
+  // Autenticação (Login / Logout)
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    try {
+      return localStorage.getItem(STORAGE_KEYS.AUTH) === "true";
+    } catch {
+      return false;
+    }
+  });
+
+  const login = (user, pass) => {
+    const cleanUser = String(user || "").trim().toLowerCase();
+    const cleanPass = String(pass || "").trim();
+
+    if (cleanUser === AUTH_CREDENTIALS.username && cleanPass === AUTH_CREDENTIALS.password) {
+      try {
+        localStorage.setItem(STORAGE_KEYS.AUTH, "true");
+      } catch {
+        // ignore
+      }
+      setIsAuthenticated(true);
+      return { success: true };
+    }
+
+    return {
+      success: false,
+      message: "Usuário ou senha incorretos. Tente novamente!",
+    };
+  };
+
+  const logout = () => {
+    try {
+      localStorage.removeItem(STORAGE_KEYS.AUTH);
+    } catch {
+      // ignore
+    }
+    setIsAuthenticated(false);
+  };
+
   // Active Boat Type
   const [activeBoatId, setActiveBoatId] = useState(() => {
     try {
@@ -210,6 +254,9 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        isAuthenticated,
+        login,
+        logout,
         activeBoatId,
         setActiveBoatId,
         activeBoatConfig,

@@ -1,5 +1,5 @@
 // src/App.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Box, Typography, Chip, ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import { AppProvider, useApp } from "./context/AppContext";
 import Header from "./components/Header";
@@ -11,36 +11,43 @@ import ExportModal from "./components/ExportModal";
 import LineupHistoryModal from "./components/LineupHistoryModal";
 import MobileStickyBar from "./components/MobileStickyBar";
 import Preloader from "./components/Preloader";
+import LoginScreen from "./components/LoginScreen";
 
 function MainContent() {
-  const { activeBoatConfig, lineupName } = useApp();
+  const { isAuthenticated, activeBoatConfig, lineupName } = useApp();
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [selectedSeat, setSelectedSeat] = useState(null);
   const [openRoster, setOpenRoster] = useState(false);
   const [openExport, setOpenExport] = useState(false);
   const [openHistory, setOpenHistory] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
+  const handleLoginSuccess = () => {
+    // Exibe o Preloader por 1.4s após o login bem-sucedido
+    setLoading(true);
+    setTimeout(() => {
       setLoading(false);
-    }, 1200);
-    return () => clearTimeout(timer);
-  }, []);
+    }, 1400);
+  };
+
+  // Se o usuário não estiver autenticado, exibe a tela de login
+  if (!isAuthenticated) {
+    return <LoginScreen onLoginSuccess={handleLoginSuccess} />;
+  }
 
   return (
     <Box sx={{ minHeight: "100vh", pb: { xs: 10, sm: 6 } }}>
-      {/* Tela de Preloader Splash Screen */}
+      {/* Tela de Preloader Splash Screen Pós-Login */}
       <Preloader loading={loading} />
 
-      {/* Header Principal */}
+      {/* Header Principal com botão de Logout */}
       <Header
         onOpenRoster={() => setOpenRoster(true)}
         onOpenExport={() => setOpenExport(true)}
         onOpenHistory={() => setOpenHistory(true)}
       />
 
-      {/* Conteúdo Principal Centrado (Layout SaaS Canomama) */}
+      {/* Conteúdo Principal Centrado (Layout SaaS Canomama Mobile-First) */}
       <Container maxWidth="md" sx={{ mt: { xs: 2, sm: 3 }, px: { xs: 1.5, sm: 3 } }}>
         {/* Título da Escalação Atual */}
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
